@@ -38,7 +38,7 @@ attacklogcat -p com.example.app --regex "Error" # filter regex
 
 ## AabToApk `0.1.0`
 
-Go TUI/CLI convert `.aab` → universal `.apk` (Google bundletool). Cần Java.
+Go TUI/CLI convert `.aab` → universal `.apk` (Google bundletool). Có thể tự cài Java + bundletool.
 
 **Install**
 
@@ -53,8 +53,11 @@ curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/aabtoapk/install.
 ```
 
 ```bash
-aabtoapk install   # lần đầu: tải bundletool.jar
+aabtoapk install-java   # lần đầu: cài JDK + set JAVA_HOME / PATH
+aabtoapk install        # tải Google bundletool.jar
 ```
+
+TUI: **Ctrl+J** = install Java · **Ctrl+I** = install bundletool
 
 **Usage**
 
@@ -64,6 +67,7 @@ aabtoapk app-release.aab         # 1 file
 aabtoapk ./builds -o ./apks --overwrite
 aabtoapk list ./builds           # preview AAB
 aabtoapk app.aab -y              # convert, auto-yes install jar
+aabtoapk install-java --force    # cài lại JDK
 ```
 
 | Flag | Ý nghĩa |
@@ -72,6 +76,7 @@ aabtoapk app.aab -y              # convert, auto-yes install jar
 | `-o, --out` | Thư mục output |
 | `--overwrite` | Ghi đè APK |
 | `--headless` | Không TUI |
-| `--install` / `install` | Cài bundletool |
+| `install-java` / **Ctrl+J** | Cài JDK + set JAVA_HOME / PATH |
+| `--install` / `install` / **Ctrl+I** | Cài bundletool |
 | `-y, --yes` | Auto-yes prompt |
 | `--ks` … | Ký APK (tuỳ chọn) |
