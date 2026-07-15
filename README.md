@@ -1,10 +1,23 @@
 # Awesome CLI Tools
 
-## AttackLogcat `0.1.1`
+Bộ CLI nhỏ gọn cho công việc Android hằng ngày. Chọn nhanh tool cần dùng, mở phần chi tiết khi cần cài đặt hoặc xem lệnh mẫu.
 
-Go TUI/CLI xem `adb logcat` — chọn device/package, filter level/text/regex, pause & copy.
+| Tool | Dùng khi cần | Điểm chính |
+|------|--------------|------------|
+| [AttackLogcat](#attacklogcat) | Đọc và lọc log Android nhanh hơn `adb logcat` thuần | Chọn device/package, lọc level/text/regex, TUI hoặc headless |
+| [AabToApk](#aabtoapk) | Chuyển file `.aab` thành universal `.apk` để cài/test | Xử lý file hoặc thư mục, tự cài Java và bundletool |
 
-**Install**
+<a id="attacklogcat"></a>
+<details>
+<summary><strong>AttackLogcat <code>0.1.1</code></strong> — xem, lọc và theo dõi log Android</summary>
+
+### Giúp gì?
+
+- Tìm lỗi theo package, level, tag, text hoặc regex mà không phải nhớ lệnh `adb logcat` dài.
+- Chọn device và package trực tiếp trong TUI; hỗ trợ pause và copy log khi debug.
+- Chạy headless để stream log ra terminal, pipe sang tool khác hoặc dùng trong script/CI.
+
+### Cài đặt
 
 ```powershell
 # Windows
@@ -16,31 +29,38 @@ irm https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/attacklogcat/install.ps1
 curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/attacklogcat/install.sh | bash
 ```
 
-**Usage**
+### Dùng nhanh
 
 ```bash
-attacklogcat                                    # TUI: pick device + package
-attacklogcat -s <serial> -p <package>           # gắn package
-attacklogcat --headless --all --level E         # stream lỗi ra stdout
-attacklogcat -p com.example.app --regex "Error" # filter regex
+attacklogcat                                    # TUI: chọn device + package
+attacklogcat -s <serial> -p <package>           # theo dõi một package
+attacklogcat --headless --all --level E         # stream mọi lỗi ra stdout
+attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 ```
 
-| Flag | Ý nghĩa |
-|------|---------|
-| `-p, --package` | Package name |
-| `-s, --serial` | Device serial |
-| `--level` | Min level `V/D/I/W/E/F` |
-| `--grep` / `--regex` / `--tag` | Filter |
-| `--headless` | Không TUI |
-| `--all` | Mọi process |
+| Flag | Tác dụng |
+|------|----------|
+| `-p, --package` | Chỉ theo dõi package được chọn |
+| `-s, --serial` | Chọn device theo serial |
+| `--level` | Đặt level tối thiểu: `V/D/I/W/E/F` |
+| `--grep` / `--regex` / `--tag` | Lọc log theo text, regex hoặc tag |
+| `--headless` | Chạy không có TUI |
+| `--all` | Hiển thị log của mọi process |
 
----
+</details>
 
-## AabToApk `0.1.0`
+<a id="aabtoapk"></a>
+<details>
+<summary><strong>AabToApk <code>0.1.0</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
 
-Go TUI/CLI convert `.aab` → universal `.apk` (Google bundletool). Có thể tự cài Java + bundletool.
+### Giúp gì?
 
-**Install**
+- Tạo APK từ Android App Bundle để cài trực tiếp lên device hoặc gửi cho tester.
+- Convert một file hoặc cả thư mục, chọn thư mục output và kiểm soát ghi đè.
+- Tự cài JDK, cấu hình `JAVA_HOME`/`PATH` và tải Google bundletool khi máy chưa có.
+- Hỗ trợ TUI cho thao tác nhanh và headless cho script/automation.
+
+### Cài đặt
 
 ```powershell
 # Windows
@@ -52,31 +72,35 @@ irm https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/aabtoapk/install.ps1 | i
 curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/aabtoapk/install.sh | bash
 ```
 
+Thiết lập dependency lần đầu nếu cần:
+
 ```bash
-aabtoapk install-java   # lần đầu: cài JDK + set JAVA_HOME / PATH
+aabtoapk install-java   # cài JDK + cấu hình JAVA_HOME / PATH
 aabtoapk install        # tải Google bundletool.jar
 ```
 
-TUI: **Ctrl+J** = install Java · **Ctrl+I** = install bundletool
+Trong TUI: **Ctrl+J** cài Java, **Ctrl+I** cài bundletool.
 
-**Usage**
+### Dùng nhanh
 
 ```bash
-aabtoapk                         # TUI
-aabtoapk app-release.aab         # 1 file
+aabtoapk                         # mở TUI
+aabtoapk app-release.aab         # convert một file
 aabtoapk ./builds -o ./apks --overwrite
-aabtoapk list ./builds           # preview AAB
-aabtoapk app.aab -y              # convert, auto-yes install jar
+aabtoapk list ./builds           # xem trước các file AAB
+aabtoapk app.aab -y              # tự đồng ý cài bundletool nếu thiếu
 aabtoapk install-java --force    # cài lại JDK
 ```
 
-| Flag | Ý nghĩa |
-|------|---------|
-| `path` | File/folder `.aab` |
-| `-o, --out` | Thư mục output |
-| `--overwrite` | Ghi đè APK |
-| `--headless` | Không TUI |
-| `install-java` / **Ctrl+J** | Cài JDK + set JAVA_HOME / PATH |
+| Lệnh / flag | Tác dụng |
+|-------------|----------|
+| `path` | File hoặc thư mục chứa `.aab` |
+| `-o, --out` | Chọn thư mục output |
+| `--overwrite` | Cho phép ghi đè APK đã có |
+| `--headless` | Chạy không có TUI |
+| `install-java` / **Ctrl+J** | Cài JDK và cấu hình môi trường |
 | `--install` / `install` / **Ctrl+I** | Cài bundletool |
-| `-y, --yes` | Auto-yes prompt |
-| `--ks` … | Ký APK (tuỳ chọn) |
+| `-y, --yes` | Tự động đồng ý prompt |
+| `--ks` … | Cấu hình ký APK khi cần |
+
+</details>
