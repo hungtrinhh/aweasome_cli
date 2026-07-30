@@ -6,6 +6,7 @@ Bộ CLI nhỏ gọn cho công việc Android hằng ngày. Chọn nhanh tool c�
 |------|--------------|------------|
 | [AttackLogcat](#attacklogcat) | Đọc và lọc log Android nhanh hơn `adb logcat` thuần | Chọn device/package, lọc level/text/regex, TUI hoặc headless |
 | [AabToApk](#aabtoapk) | Chuyển file `.aab` thành universal `.apk` để cài/test | Xử lý file hoặc thư mục, tự cài Java và bundletool |
+| [HTDotFile](#htdotfile) | Quản lý dotfile bằng manifest portable | TUI, preset, quét trạng thái và thiết lập Git repository |
 
 <a id="attacklogcat"></a>
 <details>
@@ -46,6 +47,43 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 | `--grep` / `--regex` / `--tag` | Lọc log theo text, regex hoặc tag |
 | `--headless` | Chạy không có TUI |
 | `--all` | Hiển thị log của mọi process |
+
+</details>
+
+<a id="htdotfile"></a>
+<details>
+<summary><strong>HTDotFile <code>0.1.0</code></strong> — quản lý dotfile trong terminal</summary>
+
+### Giúp gì?
+
+- Quản lý danh sách dotfile bằng YAML và đường dẫn portable.
+- Quét trạng thái file, symlink và bản copy mà không sửa target.
+- Thêm preset cho Git, terminal, editor và các AI coding tools.
+- Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS.
+
+### Cài đặt
+
+```powershell
+# Windows
+irm https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/htdot/install.ps1 | iex
+```
+
+```bash
+# Linux / macOS
+curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/htdot/install.sh | bash
+```
+
+Installer kiểm tra SHA256, tự chọn binary theo hệ điều hành và cài Git khi máy có package manager được hỗ trợ.
+
+### Dùng nhanh
+
+```bash
+htdot
+htdot --manifest /path/to/htdot.yaml
+htdot --version
+```
+
+Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, xóa, ghi đè, copy hoặc symlink target.
 
 </details>
 
