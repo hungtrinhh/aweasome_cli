@@ -4,3 +4,6 @@
 [submodule "AttackLogcatCLI"]
 	path = AttackLogcatCLI
 	url = git@github.com:Association-of-stupid-people/AttackLogcatCLI.git
+[submodule "HTDotFile"]
+	path = HTDotFile
+	url = git@github.com:Association-of-stupid-people/HTDotFile.git
