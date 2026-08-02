@@ -3,7 +3,7 @@
 	url = git@github.com:Association-of-stupid-people/AttackLogcatCLI.git
 [submodule "HTDotFile"]
 	path = HTDotFile
-	url = git@github.com:Association-of-stupid-people/HTDotFile.git
+	url = git@github.com:Association-of-stupid-people/HTDotFileCLI.git
 [submodule "aabToApk"]
 	path = aabToApk
 	url = https://github.com/Association-of-stupid-people/AABTOAPK_CLI.git
