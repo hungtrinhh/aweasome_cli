@@ -19,6 +19,7 @@ The root repo tracks only submodule commit SHAs. The Vietnamese root README is t
 
 ## Git gotchas
 
+- When the user says "commit" (or similar, e.g. "commit và push"), commit immediately using conventional commit style (`type: subject`, e.g. `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`) and push right away — no confirmation, no reminders. Submodule changes first (pushed), then root gitlink bump + root docs (pushed).
 - Code changes must be committed and pushed **inside the submodule first**, then `git add <submodule>` in the root to record the new SHA and push the gitlink. Committing at the root alone captures nothing useful.
 - Fresh clone: `git submodule update --init --recursive`. `AttackLogcatCLI` and `HTDotFile` use SSH remote URLs (`git@github.com:Association-of-stupid-people/...`); `aabToApk` uses https — without an SSH key only `aabToApk` will clone.
 
