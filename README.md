@@ -95,8 +95,9 @@ Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, x�
 
 - Tạo APK từ Android App Bundle để cài trực tiếp lên device hoặc gửi cho tester.
 - Convert một file hoặc cả thư mục, chọn thư mục output và kiểm soát ghi đè.
-- Tự cài JDK, cấu hình `JAVA_HOME`/`PATH` và tải Google bundletool khi máy chưa có.
+- Kiểm tra Java, hướng dẫn cài đặt theo hệ điều hành và tải Google bundletool khi máy chưa có.
 - Hỗ trợ TUI cho thao tác nhanh và headless cho script/automation.
+- Bản Go `0.1.0` đã phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 trước khi cài.
 
 ### Cài đặt
 
@@ -113,7 +114,7 @@ curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/aabtoapk/install.
 Thiết lập dependency lần đầu nếu cần:
 
 ```bash
-aabtoapk install-java   # cài JDK + cấu hình JAVA_HOME / PATH
+aabtoapk install-java   # kiểm tra Java và in hướng dẫn cài đặt an toàn
 aabtoapk install        # tải Google bundletool.jar
 ```
 
@@ -136,7 +137,7 @@ aabtoapk install-java --force    # cài lại JDK
 | `-o, --out` | Chọn thư mục output |
 | `--overwrite` | Cho phép ghi đè APK đã có |
 | `--headless` | Chạy không có TUI |
-| `install-java` / **Ctrl+J** | Cài JDK và cấu hình môi trường |
+| `install-java` / **Ctrl+J** | Kiểm tra Java và xem hướng dẫn cài đặt |
 | `--install` / `install` / **Ctrl+I** | Cài bundletool |
 | `-y, --yes` | Tự động đồng ý prompt |
 | `--ks` … | Cấu hình ký APK khi cần |

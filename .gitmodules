@@ -1,6 +1,6 @@
 [submodule "aabToApk"]
 	path = aabToApk
-	url = D:\\Work\\ProjectGamePersonal\\aabToApk
+	url = git@github.com:Association-of-stupid-people/aabToApk-old.git
 [submodule "AttackLogcatCLI"]
 	path = AttackLogcatCLI
 	url = git@github.com:Association-of-stupid-people/AttackLogcatCLI.git
