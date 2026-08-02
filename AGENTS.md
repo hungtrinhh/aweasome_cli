@@ -15,7 +15,7 @@ The root repo tracks only submodule commit SHAs. The Vietnamese root README is t
 - Go 1.24 for HTDotFile, Go 1.22 for the other two (per `go.mod` `go` directive).
 - Entrypoint: `cmd/<tool>/main.go`; logic in `internal/*`.
 - Verify with `go test ./...`; build with `go build -ldflags "-X main.version=$(cat VERSION)" ./cmd/<tool>`.
-- No CI, no lint config anywhere. HTDotFile convention: always run the app once (`go run ./cmd/htdot`) after code changes, before running tests.
+- CI runs on the self-hosted `light` runner: `go test ./...`, `go vet ./...`, and cross-platform builds for every supported chip. Pushing a `v*` tag creates a GitHub release with all binaries attached. No lint config anywhere. HTDotFile convention: always run the app once (`go run ./cmd/htdot`) after code changes, before running tests.
 
 ## Git gotchas
 
