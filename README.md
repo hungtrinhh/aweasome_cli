@@ -89,7 +89,7 @@ Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, x�
 
 <a id="aabtoapk"></a>
 <details>
-<summary><strong>AabToApk <code>0.1.1</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
+<summary><strong>AabToApk <code>0.1.2</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
 
 ### Giúp gì?
 
@@ -97,7 +97,7 @@ Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, x�
 - Convert một file hoặc cả thư mục, chọn thư mục output và kiểm soát ghi đè.
 - Kiểm tra Java, hướng dẫn cài đặt theo hệ điều hành và tải Google bundletool khi máy chưa có.
 - Hỗ trợ TUI cho thao tác nhanh và headless cho script/automation.
-- Bản Go `0.1.1` đã phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 rồi tự mở màn hình thiết lập trên Windows.
+- Bản Go `0.1.2` đã phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 rồi tự mở TUI có màu trên Windows.
 
 ### Cài đặt
 
@@ -114,11 +114,11 @@ curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/aabtoapk/install.
 Thiết lập dependency lần đầu nếu cần:
 
 ```bash
-aabtoapk install-java   # kiểm tra Java và in hướng dẫn cài đặt an toàn
+aabtoapk install-java   # quét Java; tự cài Temurin 21 bằng winget nếu thiếu
 aabtoapk install        # tải Google bundletool.jar
 ```
 
-TUI hiển thị trạng thái Java/bundletool và các mục **Install Java**, **Install bundletool** để chọn bằng phím mũi tên, Enter hoặc chuột.
+TUI dùng theme GrokNight, badge màu cho trạng thái Java/bundletool và highlight các mục **Install Java**, **Install bundletool** để chọn bằng phím mũi tên, Enter hoặc chuột.
 
 ### Dùng nhanh
 
