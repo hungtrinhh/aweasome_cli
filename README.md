@@ -89,15 +89,15 @@ Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, x�
 
 <a id="aabtoapk"></a>
 <details>
-<summary><strong>AabToApk <code>0.1.2</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
+<summary><strong>AabToApk <code>0.1.0</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
 
 ### Giúp gì?
 
-- Tạo APK từ Android App Bundle để cài trực tiếp lên device hoặc gửi cho tester.
-- Convert một file hoặc cả thư mục, chọn thư mục output và kiểm soát ghi đè.
-- Kiểm tra Java, hướng dẫn cài đặt theo hệ điều hành và tải Google bundletool khi máy chưa có.
-- Hỗ trợ TUI cho thao tác nhanh và headless cho script/automation.
-- Bản Go `0.1.2` đã phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 rồi tự mở TUI có màu trên Windows.
+- Convert một file `.aab` hoặc cả thư mục (đệ quy) thành universal APK bằng Google **bundletool** (`build-apks --mode=universal`).
+- TUI tương tác (path, options, tiến trình, kết quả) hoặc headless cho script/CI.
+- Tự phát hiện Java và `bundletool.jar`; tải bundletool mới nhất vào `~/.aabtoapk` khi cần.
+- Hỗ trợ ký APK qua `--ks` và nhấp đúp trên Windows mở console thật.
+- Bản Go `0.1.0` phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 rồi tự mở TUI có màu trên Windows.
 
 ### Cài đặt
 
@@ -115,7 +115,7 @@ Thiết lập dependency lần đầu nếu cần:
 
 ```bash
 aabtoapk install-java   # quét Java; tự cài Temurin 21 bằng winget nếu thiếu
-aabtoapk install        # tải Google bundletool.jar
+aabtoapk install        # tải Google bundletool.jar vào ~/.aabtoapk
 ```
 
 TUI dùng theme GrokNight, badge màu cho trạng thái Java/bundletool và highlight các mục **Install Java**, **Install bundletool** để chọn bằng phím mũi tên, Enter hoặc chuột.
@@ -126,7 +126,7 @@ TUI dùng theme GrokNight, badge màu cho trạng thái Java/bundletool và high
 aabtoapk                         # mở TUI
 aabtoapk app-release.aab         # convert một file
 aabtoapk ./builds -o ./apks --overwrite
-aabtoapk list ./builds           # xem trước các file AAB
+aabtoapk list ./builds           # xem trước các file AAB (name, package, version, size)
 aabtoapk app.aab -y              # tự đồng ý cài bundletool nếu thiếu
 aabtoapk install-java --force    # cài lại JDK
 ```
@@ -134,12 +134,19 @@ aabtoapk install-java --force    # cài lại JDK
 | Lệnh / flag | Tác dụng |
 |-------------|----------|
 | `path` | File hoặc thư mục chứa `.aab` |
-| `-o, --out` | Chọn thư mục output |
+| `-o, --out` | Thư mục output (mặc định: cạnh file AAB) |
 | `--overwrite` | Cho phép ghi đè APK đã có |
+| `--bundletool` | Đường dẫn đến `bundletool.jar` |
+| `--java` | Đường dẫn đến `java` |
+| `--recursive` / `--no-recursive` | Quét thư mục con (mặc định recursive) |
+| `--keep-apks` | Giữ file `.apks` trung gian |
 | `--headless` | Chạy không có TUI |
-| `install-java` / **Ctrl+J** | Kiểm tra Java và xem hướng dẫn cài đặt |
-| `--install` / `install` / **Ctrl+I** | Cài bundletool |
+| `install` / `--install` | Cài bundletool.jar vào cache |
+| `--force-install` | Tải lại dù đã có |
+| `install-java` / **Ctrl+J** | Kiểm tra Java và tự cài Temurin 21 nếu thiếu |
 | `-y, --yes` | Tự động đồng ý prompt |
 | `--ks` … | Cấu hình ký APK khi cần |
+| `list <path>` / `ls` / `info` | Xem trước các file AAB |
+| `--version` | In version |
 
 </details>
