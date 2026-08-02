@@ -89,7 +89,7 @@ Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, x�
 
 <a id="aabtoapk"></a>
 <details>
-<summary><strong>AabToApk <code>0.1.0</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
+<summary><strong>AabToApk <code>0.1.1</code></strong> — chuyển <code>.aab</code> thành universal <code>.apk</code></summary>
 
 ### Giúp gì?
 
@@ -97,7 +97,7 @@ Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, x�
 - Convert một file hoặc cả thư mục, chọn thư mục output và kiểm soát ghi đè.
 - Kiểm tra Java, hướng dẫn cài đặt theo hệ điều hành và tải Google bundletool khi máy chưa có.
 - Hỗ trợ TUI cho thao tác nhanh và headless cho script/automation.
-- Bản Go `0.1.0` đã phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 trước khi cài.
+- Bản Go `0.1.1` đã phát hành trên R2 cho Windows amd64, Linux amd64/arm64 và macOS amd64/arm64; installer kiểm tra SHA256 rồi tự mở màn hình thiết lập trên Windows.
 
 ### Cài đặt
 
@@ -118,7 +118,7 @@ aabtoapk install-java   # kiểm tra Java và in hướng dẫn cài đặt an t
 aabtoapk install        # tải Google bundletool.jar
 ```
 
-Trong TUI: **Ctrl+J** cài Java, **Ctrl+I** cài bundletool.
+TUI hiển thị trạng thái Java/bundletool và các mục **Install Java**, **Install bundletool** để chọn bằng phím mũi tên, Enter hoặc chuột.
 
 ### Dùng nhanh
 
