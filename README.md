@@ -57,7 +57,7 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 ### Giúp gì?
 
 - Quản lý danh sách dotfile bằng YAML và đường dẫn portable.
-- Quét trạng thái file, symlink và bản copy mà không sửa target.
+- Quét, preview và apply file/symlink với backup tự động trước khi thay target.
 - Thêm preset cho Git, terminal, editor và các AI coding tools.
 - Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS.
 
@@ -83,7 +83,7 @@ htdot --manifest /path/to/htdot.yaml
 htdot --version
 ```
 
-Hiện tại thao tác apply vẫn được khóa an toàn; tool chưa tạo, xóa, ghi đè, copy hoặc symlink target.
+Apply yêu cầu preview và xác nhận rõ ràng. Target hiện có được rename vào thư mục backup liền kề; nếu cài đặt lỗi, tool tự rollback. Chiến lược `copy` hiện chỉ hỗ trợ file thường, còn thư mục dùng `symlink`.
 
 </details>
 
