@@ -1,9 +1,9 @@
 [submodule "AttackLogcatCLI"]
 	path = AttackLogcatCLI
 	url = git@github.com:Association-of-stupid-people/AttackLogcatCLI.git
-[submodule "HTDotFile"]
-	path = HTDotFile
+[submodule "HTDotFileCLI"]
+	path = HTDotFileCLI
 	url = git@github.com:Association-of-stupid-people/HTDotFileCLI.git
-[submodule "aabToApk"]
-	path = aabToApk
+[submodule "AABTOAPK_CLI"]
+	path = AABTOAPK_CLI
 	url = https://github.com/Association-of-stupid-people/AABTOAPK_CLI.git

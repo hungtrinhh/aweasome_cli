@@ -5,8 +5,8 @@
 This is a meta/docs repo, not a code repo. The root contains only `README.md` and `.gitmodules`; all code lives in three git submodules, each an independent Go CLI/TUI built with Bubble Tea + Lip Gloss:
 
 - `AttackLogcatCLI` — `adb logcat` reader/filter (TUI + headless)
-- `HTDotFile` — dotfile manager (has its own `AGENTS.md` — read it before editing)
-- `aabToApk` — `.aab` → universal `.apk` converter via bundletool
+- `HTDotFileCLI` — dotfile manager (has its own `AGENTS.md` — read it before editing)
+- `AABTOAPK_CLI` — `.aab` → universal `.apk` converter via bundletool
 
 The root repo tracks only submodule commit SHAs. The Vietnamese root README is the main deliverable; keep its version numbers and feature claims in sync with each submodule's `VERSION` file.
 
@@ -21,7 +21,7 @@ The root repo tracks only submodule commit SHAs. The Vietnamese root README is t
 
 - When the user says "commit" (or similar, e.g. "commit và push"), commit immediately using conventional commit style (`type: subject`, e.g. `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`) and push right away — no confirmation, no reminders. Submodule changes first (pushed), then root gitlink bump + root docs (pushed).
 - Code changes must be committed and pushed **inside the submodule first**, then `git add <submodule>` in the root to record the new SHA and push the gitlink. Committing at the root alone captures nothing useful.
-- Fresh clone: `git submodule update --init --recursive`. `AttackLogcatCLI` and `HTDotFile` use SSH remote URLs (`git@github.com:Association-of-stupid-people/...`); `aabToApk` uses https — without an SSH key only `aabToApk` will clone.
+- Fresh clone: `git submodule update --init --recursive`. `AttackLogcatCLI` and `HTDotFileCLI` use SSH remote URLs (`git@github.com:Association-of-stupid-people/...`); `AABTOAPK_CLI` uses https — without an SSH key only `AABTOAPK_CLI` will clone.
 
 ## Release (run inside each submodule)
 
