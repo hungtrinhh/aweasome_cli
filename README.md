@@ -63,6 +63,14 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 ### Cài đặt
 
+Cài qua npm trên mọi nền tảng (Node.js 18+):
+
+```bash
+npm i -g htdotfile
+```
+
+Ngoài ra cũng có installer binary (yêu cầu Node để chạy bản JS, hoặc dùng binary Go qua R2):
+
 ```powershell
 # Windows
 irm https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/htdot/install.ps1 | iex
