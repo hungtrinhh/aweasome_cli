@@ -52,7 +52,7 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 <a id="htdotfile"></a>
 <details>
-<summary><strong>HTDotFile <code>0.2.7</code></strong> — quản lý dotfile trong terminal</summary>
+<summary><strong>HTDotFile <code>0.2.8</code></strong> — quản lý dotfile trong terminal</summary>
 
 ### Giúp gì?
 
@@ -86,9 +86,9 @@ Installer kiểm tra SHA256, tự chọn binary theo hệ điều hành và cài
 ### Dùng nhanh
 
 ```bash
-htdot
-htdot --manifest /path/to/htdot.yaml
-htdot --version
+htdotfile
+htdotfile --manifest /path/to/htdot.yaml
+htdotfile --version
 ```
 
 Apply yêu cầu preview và xác nhận rõ ràng. Target hiện có được rename vào thư mục backup liền kề; nếu cài đặt lỗi, tool tự rollback. Chiến lược `copy` hiện chỉ hỗ trợ file thường, còn thư mục dùng `symlink`.
