@@ -6,7 +6,7 @@ Bộ CLI nhỏ gọn cho công việc Android hằng ngày. Chọn nhanh tool c�
 |------|--------------|------------|
 | [AttackLogcat](#attacklogcat) | Đọc và lọc log Android nhanh hơn `adb logcat` thuần | Chọn device/package, lọc level/text/regex, TUI hoặc headless |
 | [AabToApk](#aabtoapk) | Chuyển file `.aab` thành universal `.apk` để cài/test | Xử lý file hoặc thư mục, tự cài Java và bundletool |
-| [HTDotFile](#htdotfile) | Quản lý dotfile bằng manifest portable | TUI, preset, quét trạng thái và thiết lập Git repository |
+| [HTDotFile](#htdotfile) | Quản lý dotfile bằng manifest portable | TUI chuột OpenTUI, preset library, sync Git và tray daemon |
 
 <a id="attacklogcat"></a>
 <details>
@@ -56,37 +56,27 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 ### Giúp gì?
 
-- Quản lý danh sách dotfile bằng YAML và đường dẫn portable.
-- Quét, preview và apply file/symlink với backup tự động trước khi thay target.
-- Thêm preset cho Git, terminal, editor và các AI coding tools.
-- Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS.
+- Quản lý danh sách dotfile bằng YAML manifest và đường dẫn portable (`~`, `%VAR%`, `$VAR`, `${VAR}`).
+- TUI chuột + bàn phím dựng trên React/OpenTUI: quét read-only, preview rồi apply file/symlink, rename target cũ vào thư mục backup liền kề và rollback nếu lỗi.
+- Preset library cho Git, GitHub CLI, Lazygit, OpenCode, Claude Code, Codex, Gemini CLI, Continue, Aider, OMP, editor, shell và terminal.
+- Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS/GCM; sync engine tự commit/push theo debounce, fetch theo interval, fast-forward repo sạch và yêu cầu quyết định rõ ràng khi repo diverged (`Use remote` / `Use local` kèm recovery branch).
+- Tray daemon chạy nền (`htdot --tray` hoặc `htdot --daemon`) và tuỳ chọn khởi động cùng Windows.
 
 ### Cài đặt
 
-Cài qua npm trên mọi nền tảng (Node.js 18+):
+Cài qua npm trên Windows, Linux hoặc macOS:
 
 ```bash
 npm i -g htdotfile
 ```
 
-Ngoài ra cũng có installer binary (yêu cầu Node để chạy bản JS, hoặc dùng binary Go qua R2):
-
-```powershell
-# Windows
-irm https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/htdot/install.ps1 | iex
-```
-
-```bash
-# Linux / macOS
-curl -fsSL https://pub-e1c1dbe5b3fc48c4bf1443041724f542.r2.dev/htdot/install.sh | bash
-```
-
-Installer kiểm tra SHA256, tự chọn binary theo hệ điều hành và cài Git khi máy có package manager được hỗ trợ.
+Bun được khai báo là dependency nên npm cài kèm, không cần cài Bun riêng. Package phát hành một build JavaScript duy nhất, không tải binary theo nền tảng; Git chỉ cần khi đồng bộ repository.
 
 ### Dùng nhanh
 
 ```bash
-htdotfile
+htdot                              # mở TUI
+htdot --tray                       # tray daemon chạy nền
 htdotfile --manifest /path/to/htdot.yaml
 htdotfile --version
 ```
