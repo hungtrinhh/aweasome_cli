@@ -52,11 +52,12 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 <a id="htdotfile"></a>
 <details>
-<summary><strong>HTDotFile <code>1.4.2</code></strong> — quản lý dotfile trong terminal</summary>
+<summary><strong>HTDotFile <code>1.5.0</code></strong> — quản lý dotfile trong terminal</summary>
 
 ### Giúp gì?
 
 - Quản lý danh sách dotfile bằng YAML manifest và đường dẫn portable (`~`, `%VAR%`, `$VAR`, `${VAR}`).
+- Danh sách dotfile được liệt kê và đồng bộ theo từng ứng dụng, với các file riêng lẻ hiển thị trực tiếp ngay trong dòng của ứng dụng.
 - TUI chuột + bàn phím dựng trên React/OpenTUI: quét read-only, preview rồi apply file/symlink, rename target cũ vào thư mục backup liền kề và rollback nếu lỗi.
 - Preset library cho Git, GitHub CLI, Lazygit, OpenCode, Claude Code, Codex, Gemini CLI, Continue, Aider, OMP, editor, shell và terminal.
 - Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS/GCM; sync engine tự commit/push theo debounce, fetch theo interval, fast-forward repo sạch và yêu cầu quyết định rõ ràng khi repo diverged (`Use remote` / `Use local` kèm recovery branch).
