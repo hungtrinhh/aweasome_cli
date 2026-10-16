@@ -6,7 +6,7 @@ Bộ CLI nhỏ gọn cho công việc Android hằng ngày. Chọn nhanh tool c�
 |------|--------------|------------|
 | [AttackLogcat](#attacklogcat) | Đọc và lọc log Android nhanh hơn `adb logcat` thuần | Chọn device/package, lọc level/text/regex, TUI hoặc headless |
 | [AabToApk](#aabtoapk) | Chuyển file `.aab` thành universal `.apk` để cài/test | Xử lý file hoặc thư mục, tự cài Java và bundletool |
-| [HTDotFile](#htdotfile) | Quản lý dotfile bằng manifest portable | TUI chuột OpenTUI, preset library, sync Git và tray daemon |
+| [HTDotFile](#htdotfile) | Quản lý dotfile bằng manifest portable | App desktop Electron ở system tray, preset library, sync Git chạy nền |
 
 <a id="attacklogcat"></a>
 <details>
@@ -52,35 +52,38 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 <a id="htdotfile"></a>
 <details>
-<summary><strong>HTDotFile <code>1.5.0</code></strong> — quản lý dotfile trong terminal</summary>
+<summary><strong>HTDotFile <code>1.5.0</code></strong> — quản lý dotfile bằng app desktop chạy ở system tray</summary>
 
 ### Giúp gì?
 
 - Quản lý danh sách dotfile bằng YAML manifest và đường dẫn portable (`~`, `%VAR%`, `$VAR`, `${VAR}`).
-- Danh sách dotfile được liệt kê và đồng bộ theo từng ứng dụng, với các file riêng lẻ hiển thị trực tiếp ngay trong dòng của ứng dụng.
-- TUI chuột + bàn phím dựng trên React/OpenTUI: quét read-only, preview rồi apply file/symlink, rename target cũ vào thư mục backup liền kề và rollback nếu lỗi.
+- Danh sách dotfile được liệt kê và đồng bộ theo từng ứng dụng; Preview, Apply và xem khác biệt áp dụng cho cả ứng dụng hoặc từng file.
+- App desktop Electron: quét read-only, preview rồi apply file/symlink, rename target cũ vào thư mục backup liền kề và rollback nếu lỗi. Giao diện có animation, toast thông báo và hỗ trợ reduced-motion.
+- Xem khác biệt từng dòng giữa file trên máy và bản trong repository, rồi chọn giữ bản nào (`Use repository version` / `Keep local version`).
 - Preset library cho Git, GitHub CLI, Lazygit, OpenCode, Claude Code, Codex, Gemini CLI, Continue, Aider, OMP, editor, shell và terminal.
 - Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS/GCM; sync engine tự commit/push theo debounce, fetch theo interval, fast-forward repo sạch và yêu cầu quyết định rõ ràng khi repo diverged (`Use remote` / `Use local` kèm recovery branch).
-- Tray daemon chạy nền (`htdot --tray` hoặc `htdot --daemon`) và tuỳ chọn khởi động cùng Windows.
+- Sống ở system tray: đóng cửa sổ chỉ ẩn đi, sync vẫn chạy nền; menu tray có `Sync now` và `Start with Windows`.
 
 ### Cài đặt
 
-Cài qua npm trên Windows, Linux hoặc macOS:
+Cài qua npm trên Windows, Linux hoặc macOS (Node 22 trở lên):
 
 ```bash
 npm i -g htdotfile
 ```
 
-Bun được khai báo là dependency nên npm cài kèm, không cần cài Bun riêng. Package phát hành một build JavaScript duy nhất, không tải binary theo nền tảng; Git chỉ cần khi đồng bộ repository.
+Electron runtime được tải ở lần chạy đầu nếu installer bỏ qua bước này. Git chỉ cần khi đồng bộ repository.
 
 ### Dùng nhanh
 
 ```bash
-htdot                              # mở TUI
-htdot --tray                       # tray daemon chạy nền
-htdotfile --manifest /path/to/htdot.yaml
-htdotfile --version
+htdot                                # mở app (icon xuất hiện ở tray)
+htdot --show                         # mở cửa sổ ngay
+htdot --manifest /path/to/htdot.yaml # dùng manifest cụ thể
+htdot version
 ```
+
+Chạy `htdot` lần nữa khi app đang chạy sẽ mở lại cửa sổ hiện có. Thoát hẳn bằng `Exit` trong menu tray.
 
 Apply yêu cầu preview và xác nhận rõ ràng. Target hiện có được rename vào thư mục backup liền kề; nếu cài đặt lỗi, tool tự rollback. Chiến lược `copy` hiện chỉ hỗ trợ file thường, còn thư mục dùng `symlink`.
 
