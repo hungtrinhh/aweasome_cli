@@ -6,7 +6,7 @@ Bộ CLI nhỏ gọn cho công việc Android hằng ngày. Chọn nhanh tool c�
 |------|--------------|------------|
 | [AttackLogcat](#attacklogcat) | Đọc và lọc log Android nhanh hơn `adb logcat` thuần | Chọn device/package, lọc level/text/regex, TUI hoặc headless |
 | [AabToApk](#aabtoapk) | Chuyển file `.aab` thành universal `.apk` để cài/test | Xử lý file hoặc thư mục, tự cài Java và bundletool |
-| [HTDotFile](#htdotfile) | Quản lý dotfile kiểu chezmoi | Source/target state, template, mã hoá age/gpg; app Electron ở system tray + CLI, sync Git chạy nền |
+| [HTDotFile](#htdotfile) | Quản lý dotfile kiểu chezmoi | Source/target state, template, mã hoá age/gpg; app Electron ở system tray + CLI, sync Git thủ công |
 
 <a id="attacklogcat"></a>
 <details>
@@ -52,17 +52,17 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 <a id="htdotfile"></a>
 <details>
-<summary><strong>HTDotFile <code>2.0.0</code></strong> — quản lý dotfile kiểu chezmoi: source/target state, template, mã hoá; có app tray và CLI</summary>
+<summary><strong>HTDotFile <code>2.2.0</code></strong> — quản lý dotfile kiểu chezmoi: source/target state, template, mã hoá; có app tray và CLI</summary>
 
 ### Giúp gì?
 
 - Mô hình chezmoi: repo Git chứa *source state* với tên file mã hoá thuộc tính (`dot_gitconfig`, `private_dot_ssh/`, `executable_*`, `exact_*`, `symlink_*`, `*.tmpl`, `encrypted_*`); tool tính *target state* cho máy hiện tại rồi áp dụng phần chênh lệch.
 - Template cú pháp Go (`{{ if eq .htdot.os "windows" }}`...) với dữ liệu máy (`.htdot.os/arch/hostname/username`), file `.htdotdata.yaml|json`, `.htdotignore` cũng là template; hàm `include`, `env`, `output`, `onepasswordRead`, `bwPassword`...
 - Mã hoá secret bằng `age` (thuần JS, không cần cài thêm) hoặc `gpg`: `htdot keygen`, `htdot add --encrypt`.
-- CLI: `init`, `add`, `status`, `diff`, `apply [-n]`, `verify`, `update`, `cat`, `data`, `keygen`. Không có migration từ `htdot.yaml` của bản 1.x — thêm lại file bằng `htdot add`.
-- App desktop Electron: danh sách target kèm trạng thái, xem diff, preview rồi apply; target cũ (hoặc mục thừa trong thư mục `exact_`) được rename vào thư mục backup liền kề, rollback nếu lỗi, không bao giờ xoá.
-- Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS/GCM; sync engine tự commit/push theo debounce, fetch theo interval, fast-forward repo sạch và yêu cầu quyết định rõ ràng khi repo diverged (`Use remote` / `Use local` kèm recovery branch).
-- Sống ở system tray: đóng cửa sổ chỉ ẩn đi, sync vẫn chạy nền; menu tray có `Sync now` và `Start with Windows`.
+- CLI tương thích chezmoi v2.73.1: `init`, `add` (cả thư mục, đệ quy), `re-add`, `forget`, `remove`, `chattr`, `edit`, `managed`/`unmanaged`/`ignored`, `status`, `diff`, `apply [-n]`, `verify`, `update`, `merge`, `import`, `archive`, `execute-template`, `dump`, `encrypt`/`decrypt`, `doctor`, `secret`, `state`... cùng các flag của chezmoi. Không có migration từ `htdot.yaml` của bản 1.x — thêm lại file bằng `htdot add`.
+- App desktop Electron: danh sách target kèm trạng thái, xem diff, preview rồi apply, kéo-thả file/thư mục để add, nút Re-add/Forget từng dòng; thao tác nặng chạy trong worker thread nên cửa sổ không bị treo; target cũ (hoặc mục thừa trong thư mục `exact_`) được rename vào thư mục backup liền kề, rollback nếu lỗi, không bao giờ xoá.
+- Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS/GCM; sync chỉ chạy khi người dùng bấm (không còn sync nền từ 2.1.0): commit/push thay đổi local, fast-forward repo sạch và yêu cầu quyết định rõ ràng khi repo diverged (`Use remote` / `Use local` kèm recovery branch).
+- Sống ở system tray: đóng cửa sổ chỉ ẩn đi; menu tray có `Sync now` và `Start with Windows`.
 
 ### Cài đặt
 
