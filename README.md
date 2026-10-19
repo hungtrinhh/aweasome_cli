@@ -52,7 +52,7 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 <a id="htdotfile"></a>
 <details>
-<summary><strong>HTDotFile <code>2.3.0</code></strong> — quản lý dotfile kiểu chezmoi: source/target state, template, mã hoá; có app tray và CLI</summary>
+<summary><strong>HTDotFile <code>2.4.0</code></strong> — quản lý dotfile kiểu chezmoi: source/target state, template, mã hoá; có app tray và CLI</summary>
 
 ### Giúp gì?
 
