@@ -6,7 +6,7 @@ Bộ CLI nhỏ gọn cho công việc Android hằng ngày. Chọn nhanh tool c�
 |------|--------------|------------|
 | [AttackLogcat](#attacklogcat) | Đọc và lọc log Android nhanh hơn `adb logcat` thuần | Chọn device/package, lọc level/text/regex, TUI hoặc headless |
 | [AabToApk](#aabtoapk) | Chuyển file `.aab` thành universal `.apk` để cài/test | Xử lý file hoặc thư mục, tự cài Java và bundletool |
-| [HTDotFile](#htdotfile) | Quản lý dotfile kiểu chezmoi | Source/target state, mã hoá age/gpg; app Electron ở system tray + CLI, sync Git thủ công |
+| [HTDotFile](#htdotfile) | Quản lý dotfile, dùng thay chezmoi được trên cùng một repo | Client của chezmoi: chung source/config, template, script, external, mã hoá age/gpg; app Electron ở system tray + CLI, sync Git thủ công |
 
 <a id="attacklogcat"></a>
 <details>
@@ -52,13 +52,16 @@ attacklogcat -p com.example.app --regex "Error" # lọc bằng regex
 
 <a id="htdotfile"></a>
 <details>
-<summary><strong>HTDotFile <code>3.0.0</code></strong> — quản lý dotfile kiểu chezmoi: source/target state, mã hoá; có app tray và CLI</summary>
+<summary><strong>HTDotFile <code>3.1.0</code></strong> — client của chezmoi: dùng <code>chezmoi</code> hoặc <code>htdot</code> trên cùng repo dotfile; có app tray và CLI</summary>
 
 ### Giúp gì?
 
-- Mô hình chezmoi: repo Git chứa *source state* với tên file mã hoá thuộc tính (`dot_gitconfig`, `private_dot_ssh/`, `executable_*`, `exact_*`, `symlink_*`, `encrypted_*`); tool tính *target state* cho máy hiện tại rồi áp dụng phần chênh lệch.
-- Từ 3.0.0 không còn hỗ trợ template: file `*.tmpl` còn sót trong source hiện lỗi và cần đổi tên (bỏ `.tmpl`); `.htdotignore` chỉ gồm pattern thường.
-- Mã hoá secret bằng `age` (thuần JS, không cần cài thêm) hoặc `gpg`: `htdot keygen`, `htdot add --encrypt`.
+- Là client của chezmoi: cùng một repo dotfile có thể apply bằng `chezmoi` hoặc `htdot` và cho ra cùng kết quả (kiểm chứng bằng bộ test so sánh với binary chezmoi v2.73.1 thật). Không có settings riêng thì htdot dùng luôn source dir của chezmoi (`~/.local/share/chezmoi`) và đọc `~/.config/chezmoi/chezmoi.toml` (`[data]`, `encryption`, `[age]`/`[gpg]`).
+- Mô hình chezmoi: repo Git chứa *source state* với tên file mã hoá thuộc tính (`dot_`, `private_`, `executable_`, `readonly_`, `empty_`, `exact_`, `symlink_`, `create_`, `modify_`, `remove_`, `external_`, `encrypted_*`, `*.tmpl`); tool tính *target state* cho máy hiện tại rồi áp dụng phần chênh lệch.
+- Template kiểu Go `text/template` + hàm của chezmoi (`.chezmoi.*`, `.chezmoidata.*`, `.chezmoitemplates/`, `lookPath`, `output`, ...); `.chezmoiignore`/`.chezmoiremove` cũng là template.
+- Script `run_`/`run_once_`/`run_onchange_` (`before_`/`after_`, `.chezmoiscripts/`) chạy theo đúng thứ tự của chezmoi khi `htdot apply`; `modify_` script; externals `.chezmoiexternal.*` (file, archive tar/zip, archive-file, git-repo, cache theo `refreshPeriod`, `-R` để tải lại).
+- Mã hoá secret bằng `age` (thuần JS, không cần cài thêm) hoặc `gpg`, dạng ASCII-armored giống chezmoi nên hai tool đọc được file của nhau: `htdot keygen`, `htdot add --encrypt`.
+- Không dùng chung: persistent state (`chezmoistate.boltdb` vs `state.json`), nên script `run_once_` chạy một lần cho mỗi tool.
 - CLI tương thích chezmoi v2.73.1: `init`, `add` (cả thư mục, đệ quy), `re-add`, `forget`, `remove`, `chattr`, `edit`, `managed`/`unmanaged`/`ignored`, `status`, `diff`, `apply [-n]`, `verify`, `update`, `merge`, `import`, `archive`, `dump`, `encrypt`/`decrypt`, `doctor`, `secret`, `state`... cùng các flag của chezmoi. Không có migration từ `htdot.yaml` của bản 1.x — thêm lại file bằng `htdot add`.
 - App desktop Electron: danh sách target kèm trạng thái, xem diff, preview rồi apply, kéo-thả file/thư mục để add, nút Re-add/Forget từng dòng; thao tác nặng chạy trong worker thread nên cửa sổ không bị treo; target cũ (hoặc mục thừa trong thư mục `exact_`) được rename vào thư mục backup liền kề, rollback nếu lỗi, không bao giờ xoá.
 - Thiết lập repository Git bằng SSH Agent, SSH key hoặc HTTPS/GCM; sync chỉ chạy khi người dùng bấm (không còn sync nền từ 2.1.0): commit/push thay đổi local, fast-forward repo sạch và yêu cầu quyết định rõ ràng khi repo diverged (`Use remote` / `Use local` kèm recovery branch).
@@ -80,7 +83,7 @@ Electron runtime được tải ở lần chạy đầu nếu installer bỏ qua
 htdot                          # mở app (icon xuất hiện ở tray)
 htdot --show                   # mở cửa sổ ngay
 htdot add ~/.gitconfig         # nhập file vào source (--encrypt)
-htdot diff && htdot apply      # xem khác biệt rồi áp dụng (apply -n chỉ xem plan)
+htdot diff && htdot apply      # xem khác biệt rồi áp dụng + chạy script (apply -n chỉ xem plan)
 htdot update                   # sync repo (pull/push) rồi apply
 htdot --config <file> ...      # dùng file settings khác (HTDOT_CONFIG); HTDOT_TARGET đổi thư mục đích
 htdot version
